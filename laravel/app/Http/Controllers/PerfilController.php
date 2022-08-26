@@ -25,9 +25,8 @@ class PerfilController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-
     {
-        //
+        return view('perfil/create');
     }
 
     /**
@@ -38,7 +37,16 @@ class PerfilController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $storeData = $request->validate([
+        'name'=>'required|max:255',
+        'email'=>'required|max:255',
+        'detail' => 'required'
+      ]);
+      
+      $perfil = Perfil::create($storeData);
+
+      return redirect('/perfil')->with('success','Perfil salvo com sucesso.');
+
     }
 
     /**
@@ -60,6 +68,7 @@ class PerfilController extends Controller
      */
     public function edit(Perfil $perfil)
     {
+        return view ('perfil.edit',compact('perfil'));
         //
     }
 
@@ -72,7 +81,15 @@ class PerfilController extends Controller
      */
     public function update(Request $request, Perfil $perfil)
     {
-        //
+      $storeData = $request->validate([
+        'name'=>'required|max:255',
+        'email'=>'required|max:255',
+        'detail' => 'required'
+      ]);
+      
+      $perfil->update($storeData);
+
+      return redirect('/perfil')->with('success','Perfil salvo com sucesso.');
     }
 
     /**
